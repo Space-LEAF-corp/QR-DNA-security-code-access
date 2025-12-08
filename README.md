@@ -360,6 +360,10 @@ Test coverage includes:
 npm run build
 ```
 
+## Version History
+
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
+
 ## License
 
 Apache-2.0
