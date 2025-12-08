@@ -1,0 +1,35 @@
+{
+  "privacyTiers": {
+    "children": "private",
+    "parents": "protected",
+    "government": "public"
+  },
+  "accessControl": {
+    "LEIF_STEWARD": {
+      "permissions": ["BODY_MERGE", "READ", "WRITE", "ADMIN"],
+      "description": "Full administrative access for LEIF stewards"
+    },
+    "PARENT": {
+      "permissions": ["READ", "WRITE"],
+      "description": "Parent access to family information"
+    },
+    "CHILD": {
+      "permissions": ["READ"],
+      "description": "Child read-only access"
+    }
+  },
+  "notificationChannels": {
+    "family": {
+      "privacyLevel": "private",
+      "redactFields": ["sessionId", "childName", "childId"]
+    },
+    "authority": {
+      "privacyLevel": "protected",
+      "redactFields": []
+    },
+    "public": {
+      "privacyLevel": "public",
+      "redactFields": []
+    }
+  }
+}
