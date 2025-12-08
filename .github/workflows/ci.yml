@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, fox-qppi/init ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build TypeScript
+      run: npm run build
+    
+    - name: Run tests
+      run: npm test
+      env:
+        NOTIFIER_MOCK_SIGNAL: true
+    
+    - name: Verify ledger integrity
+      run: node -e "import('./dist/index.js').then(m => { const fox = m.initializeFox(); console.log('Ledger OK:', fox.verifyLedgerIntegrity()); })"
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: build-artifacts-node-${{ matrix.node-version }}
+        path: dist/
+        retention-days: 7

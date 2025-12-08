@@ -1,0 +1,100 @@
+name: Daily Stress Test
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Test duration in seconds'
+        required: false
+        default: '60'
+      concurrent:
+        description: 'Concurrent requests'
+        required: false
+        default: '10'
+
+jobs:
+  stress-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build TypeScript
+      run: npm run build
+    
+    - name: Run stress test
+      run: npm run stress
+      env:
+        STRESS_DURATION_SECONDS: ${{ github.event.inputs.duration || '60' }}
+        STRESS_CONCURRENT_REQUESTS: ${{ github.event.inputs.concurrent || '10' }}
+        NOTIFIER_MOCK_SIGNAL: true
+    
+    - name: Upload stress test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: stress-test-results-${{ github.run_number }}
+        path: stress-test-results/
+        retention-days: 30
+    
+    - name: Configure AWS credentials (if S3 upload enabled)
+      if: env.STRESS_S3_BUCKET != ''
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.STRESS_S3_REGION || 'us-east-1' }}
+    
+    - name: Upload to S3 (if configured)
+      if: env.STRESS_S3_BUCKET != ''
+      run: |
+        if [ -d "stress-test-results" ]; then
+          aws s3 sync stress-test-results/ s3://${{ env.STRESS_S3_BUCKET }}/stress-tests/$(date +%Y-%m-%d)/ \
+            --exclude "*" --include "*.json"
+          echo "Results uploaded to S3"
+        fi
+      env:
+        STRESS_S3_BUCKET: ${{ secrets.STRESS_S3_BUCKET }}
+        STRESS_S3_REGION: ${{ secrets.STRESS_S3_REGION || 'us-east-1' }}
+    
+    - name: Comment on commit with results
+      if: github.event_name != 'schedule'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          const resultsDir = 'stress-test-results';
+          if (fs.existsSync(resultsDir)) {
+            const files = fs.readdirSync(resultsDir);
+            if (files.length > 0) {
+              const latestFile = files[files.length - 1];
+              const results = JSON.parse(fs.readFileSync(path.join(resultsDir, latestFile), 'utf8'));
+              
+              const comment = `## Stress Test Results
+              
+              - Total Requests: ${results.totalRequests}
+              - Successful: ${results.successfulRequests}
+              - Failed: ${results.failedRequests}
+              - Avg Response Time: ${results.averageResponseTime.toFixed(2)}ms
+              - Min Response Time: ${results.minResponseTime.toFixed(2)}ms
+              - Max Response Time: ${results.maxResponseTime.toFixed(2)}ms
+              - Duration: ${((results.endTime - results.startTime) / 1000).toFixed(2)}s
+              `;
+              
+              console.log(comment);
+            }
+          }

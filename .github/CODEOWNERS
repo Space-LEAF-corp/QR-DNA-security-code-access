@@ -1,0 +1,16 @@
+# Fox QPPI Code Owners
+# These owners will be requested for review when someone opens a pull request.
+
+# Default owners for everything in the repo
+* @Space-LEAF-corp/fox-qppi-team
+
+# Security components require security team review
+/src/security/ @Space-LEAF-corp/security-team
+/src/alerts/ @Space-LEAF-corp/security-team
+
+# Configuration files require admin review
+/config/ @Space-LEAF-corp/admin-team
+/.github/ @Space-LEAF-corp/admin-team
+
+# Critical core components
+/src/core/ @Space-LEAF-corp/core-team

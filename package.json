@@ -1,0 +1,36 @@
+{
+  "name": "fox-qppi",
+  "version": "1.0.0",
+  "description": "Fox QPPI: QR-DNA security code access with immutable ledger, crypto verification, and tail-based alert system",
+  "type": "module",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "stress": "node dist/tools/stress.js",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "qr-dna",
+    "security",
+    "access-control",
+    "immutable-ledger",
+    "cryptography"
+  ],
+  "author": "Space-LEAF-corp",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.6",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "tweetnacl": "^1.0.3"
+  }
+}

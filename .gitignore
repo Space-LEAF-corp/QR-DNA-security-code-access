@@ -137,3 +137,13 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# TypeScript build output
+dist/
+*.js.map
+*.d.ts
+*.d.ts.map
+
+# Test artifacts
+test-results/
+stress-test-results/

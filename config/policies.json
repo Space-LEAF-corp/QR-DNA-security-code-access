@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "accessControl": {
+    "defaultPolicy": "deny",
+    "qrDnaRequired": true,
+    "tokenExpiryHours": 24,
+    "maxFailedAttempts": 3,
+    "lockoutDurationMinutes": 30
+  },
+  "ledger": {
+    "hashAlgorithm": "sha256",
+    "immutable": true,
+    "auditRetentionDays": 365
+  },
+  "tails": {
+    "children": {
+      "enabled": true,
+      "priority": 10,
+      "alertThreshold": "medium"
+    },
+    "parents": {
+      "enabled": true,
+      "priority": 9,
+      "alertThreshold": "medium"
+    },
+    "government": {
+      "enabled": false,
+      "priority": 5,
+      "alertThreshold": "high"
+    },
+    "safetyFirewall": {
+      "enabled": true,
+      "priority": 8,
+      "alertThreshold": "high"
+    },
+    "privacyReminder": {
+      "enabled": true,
+      "priority": 7,
+      "alertThreshold": "low"
+    },
+    "flexMGuardian": {
+      "enabled": true,
+      "priority": 6,
+      "alertThreshold": "medium"
+    },
+    "authoritySync": {
+      "enabled": false,
+      "priority": 4,
+      "alertThreshold": "high"
+    },
+    "communalBroadcast": {
+      "enabled": true,
+      "priority": 3,
+      "alertThreshold": "low"
+    }
+  },
+  "notifier": {
+    "webhookEnabled": true,
+    "hmacSignature": true,
+    "retryAttempts": 3,
+    "timeoutSeconds": 10
+  },
+  "deterrence": {
+    "enabled": true,
+    "escalationLevels": ["warning", "alert", "lockout", "report"],
+    "reportToAuthorities": false
+  }
+}
