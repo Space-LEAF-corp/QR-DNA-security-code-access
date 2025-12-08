@@ -35,5 +35,30 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  "description": "QR-DNA security code access system with immutable ledger and cryptographic verification",
+  "type": "module",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.spec.js",
+    "pretest": "npm run build"
+  },
+  "keywords": [
+    "qr-dna",
+    "security",
+    "ledger",
+    "cryptography"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "typescript": "^5.3.3"
   }
 }
