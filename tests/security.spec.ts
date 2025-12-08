@@ -156,7 +156,7 @@ describe('KeyManager', () => {
 describe('QrDnaAuth', () => {
   let keyManager: KeyManager;
   let qrDnaAuth: QrDnaAuth;
-  let keyPair: any;
+  let keyPair: { kid: string; publicKeyBase64: string; secretKeyUint8Array: Uint8Array };
 
   beforeEach(() => {
     keyManager = new KeyManager();
@@ -505,18 +505,10 @@ describe('QrDnaAuth', () => {
     it('should verify attestation with new key after rotation', () => {
       // Rotate to new key
       const newKid = keyManager.rotateKey();
-      const newKeyPair = keyManager.generateKeyPair();
       
       // Get the new active key
       const currentKey = keyManager.getCurrentKey();
       expect(currentKey?.kid).toBe(newKid);
-      
-      // Create new keypair for signing (simulate)
-      const freshKeyPair = nacl.sign.keyPair();
-      const publicKeyBase64 = Buffer.from(freshKeyPair.publicKey).toString('base64');
-      
-      // Re-import with correct kid
-      keyManager.importPublicKey(newKid, currentKey!.publicKeyBase64);
       
       // Create attestation with new key (we need the secret key)
       // For this test, we'll generate a new keypair and import it

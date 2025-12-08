@@ -11,7 +11,7 @@
 
 import Ajv, { ValidateFunction } from 'ajv';
 import * as nacl from 'tweetnacl';
-import { KeyManager, KeyMetadata } from './keyManager';
+import { KeyManager } from './keyManager';
 import * as attestationSchema from './schemas/qrDnaAttestation.schema.json';
 
 // Default clock skew: 5 minutes (300,000 ms)
@@ -26,7 +26,7 @@ export interface AttestationMessage {
   actor: string;
   scope: string;
   nonce?: string;
-  meta?: Record<string, any>;
+  meta?: Record<string, unknown>;
 }
 
 export interface AttestationPayload {
@@ -97,7 +97,7 @@ export class QrDnaAuth {
    * @param attestationMsg Parsed attestation message object
    * @returns Validation result with errors if invalid
    */
-  private validateSchema(attestationMsg: any): { valid: boolean; errors?: string } {
+  private validateSchema(attestationMsg: unknown): { valid: boolean; errors?: string } {
     const valid = this.validateAttestation(attestationMsg);
     
     if (!valid) {
@@ -164,12 +164,19 @@ export class QrDnaAuth {
     const warnings: string[] = [];
 
     // Parse attestationMessage if it's a string
+    // Keep original string for signature verification (property order matters!)
     let attestationMsg: AttestationMessage;
+    let messageStr: string;
+    
     try {
       if (typeof payload.attestationMessage === 'string') {
-        attestationMsg = JSON.parse(payload.attestationMessage);
+        messageStr = payload.attestationMessage;
+        attestationMsg = JSON.parse(messageStr);
       } else {
+        // If object provided, convert to string for signature verification
+        // Note: This may cause issues if property order differs from signed message
         attestationMsg = payload.attestationMessage;
+        messageStr = JSON.stringify(attestationMsg);
       }
     } catch (error) {
       return {
@@ -231,10 +238,7 @@ export class QrDnaAuth {
     }
 
     // Step 5: Verify cryptographic signature
-    const messageStr = typeof payload.attestationMessage === 'string' 
-      ? payload.attestationMessage 
-      : JSON.stringify(attestationMsg);
-    
+    // Use the messageStr we prepared earlier (preserves original JSON formatting)
     const signatureValid = this.verifySignature(
       messageStr,
       payload.attestationSignatureBase64,
