@@ -1,4 +1,9 @@
 /**
+ * Alerts module exports
+ */
+
+export { AlertManager } from './alertManager.js';
+export type { Alert, AlertLevel, AlertConfig } from './types.js';
  * Alert system for monitoring and notifications
  */
 

@@ -6,6 +6,7 @@ export default {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   transform: {
+    '^.+\\.tsx?$': [
     '^.+\\.ts$': [
       'ts-jest',
       {
@@ -17,6 +18,10 @@ export default {
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.d.ts',
+    '!src/index.ts',
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
   ],
 module.exports = {
   preset: 'ts-jest',

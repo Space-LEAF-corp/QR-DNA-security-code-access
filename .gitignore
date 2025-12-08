@@ -82,6 +82,13 @@ out
 .nuxt
 dist
 
+# TypeScript build output
+*.js
+*.d.ts
+*.js.map
+*.d.ts.map
+!jest.config.js
+!example.js
 # Compiled tests (handled by Jest)
 tests/**/*.js
 tests/**/*.d.ts

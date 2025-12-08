@@ -1,6 +1,39 @@
 {
   "version": "1.0.0",
   "policies": {
+    "ledger": {
+      "immutable": true,
+      "appendOnly": true,
+      "requireSignature": false,
+      "hashAlgorithm": "sha256",
+      "maxEntrySize": 1048576
+    },
+    "security": {
+      "enableEncryption": true,
+      "keyRotationDays": 90,
+      "minKeyLength": 32,
+      "allowedAlgorithms": ["ed25519", "rsa-4096"]
+    },
+    "alerts": {
+      "enabled": true,
+      "levels": ["info", "warning", "error", "critical"],
+      "rateLimit": {
+        "maxPerMinute": 100,
+        "maxPerHour": 1000
+      }
+    },
+    "tails": {
+      "enabled": true,
+      "retentionPolicy": {
+        "days": 90,
+        "maxSize": 10737418240
+      },
+      "compressionEnabled": true
+    },
+    "validation": {
+      "strictMode": true,
+      "allowUnknownFields": false,
+      "requireAllFields": true
     "security": {
       "minPasswordLength": 12,
       "requireTwoFactor": true,
