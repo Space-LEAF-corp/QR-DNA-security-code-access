@@ -30,7 +30,8 @@ export class ImmutableLedger {
    * Append a new entry to the ledger (append-only)
    */
   async append(data: unknown): Promise<LedgerEntry> {
-    if (this.entries.length >= (this.config.maxSize || 10000)) {
+    const maxSize = this.config.maxSize || 10000;
+    if (this.entries.length >= maxSize) {
       throw new Error('Ledger has reached maximum size');
     }
 

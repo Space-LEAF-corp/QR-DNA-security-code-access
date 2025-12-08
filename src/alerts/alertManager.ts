@@ -32,7 +32,7 @@ export class AlertManager {
     }
 
     const alert: Alert = {
-      id: `alert-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `alert-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
       timestamp: Date.now(),
       level,
       message,
@@ -99,13 +99,23 @@ export class AlertManager {
     const now = Date.now();
     const timestamps = this.rateLimitCounters.get(source) || [];
 
-    // Clean up old timestamps
-    const recentTimestamps = timestamps.filter(ts => now - ts < 3600000); // 1 hour
-    const minuteTimestamps = recentTimestamps.filter(ts => now - ts < 60000); // 1 minute
+    // Clean up old timestamps and count by time window in single pass
+    let minuteCount = 0;
+    let hourCount = 0;
+    
+    for (const ts of timestamps) {
+      const age = now - ts;
+      if (age < 60000) { // 1 minute
+        minuteCount++;
+        hourCount++;
+      } else if (age < 3600000) { // 1 hour
+        hourCount++;
+      }
+    }
 
     return (
-      minuteTimestamps.length < (this.config.maxPerMinute || 100) &&
-      recentTimestamps.length < (this.config.maxPerHour || 1000)
+      minuteCount < (this.config.maxPerMinute || 100) &&
+      hourCount < (this.config.maxPerHour || 1000)
     );
   }
 
