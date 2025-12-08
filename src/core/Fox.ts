@@ -2,7 +2,7 @@
  * Fox - Main orchestrator for QR-DNA operations
  */
 
-import type { FoxConfig, TailConfig, QrDnaToken, VerificationResult } from './Types.js';
+import type { FoxConfig, QrDnaToken, VerificationResult } from './Types.js';
 import { Tail } from './Tail.js';
 import { verifyWithRegistry } from '../security/verifyWithRegistry.js';
 import { ImmutableLedger } from '../security/immutableLedger.js';

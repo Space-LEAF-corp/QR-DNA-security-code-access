@@ -33,11 +33,12 @@ function keyInfoToJWK(keyInfo: KeyInfo): JWK {
   };
 }
 
-app.get('/.well-known/jwks.json', async (req, res) => {
+app.get('/.well-known/jwks.json', async (_req, res) => {
   try {
     const registry = getRegistry();
     if (!registry) {
-      return res.status(503).json({ error: 'Key registry not initialized' });
+      res.status(503).json({ error: 'Key registry not initialized' });
+      return;
     }
 
     const keys = await registry.listKeys();
@@ -60,7 +61,7 @@ app.get('/.well-known/jwks.json', async (req, res) => {
   }
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: Date.now() });
 });
 

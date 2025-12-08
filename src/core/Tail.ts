@@ -35,12 +35,12 @@ export class Tail {
     await this.cleanup();
   }
 
-  private async initialize(): Promise<void> {
+  protected async initialize(): Promise<void> {
     // Tail-specific initialization logic
     // This is overridden by specific tail implementations
   }
 
-  private async cleanup(): Promise<void> {
+  protected async cleanup(): Promise<void> {
     // Tail-specific cleanup logic
   }
 

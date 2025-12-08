@@ -7,7 +7,7 @@ import { KeyManager } from '../security/keyManager.js';
 import { QrDnaAuth } from '../security/qrDnaAuth.js';
 import { ImmutableLedger } from '../security/immutableLedger.js';
 
-async function runOperation(name: string, operation: () => Promise<void>): Promise<{ success: boolean; error?: string }> {
+async function runOperation(_name: string, operation: () => Promise<void>): Promise<{ success: boolean; error?: string }> {
   try {
     await operation();
     return { success: true };

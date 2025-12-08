@@ -7,12 +7,10 @@ import type { TailConfig } from '../core/Types.js';
 
 export class FlexMGuardianTail extends Tail {
   private threatLevel: 'low' | 'medium' | 'high';
-  private adaptiveRules: Map<string, unknown>;
 
   constructor(config: TailConfig) {
     super(config);
     this.threatLevel = 'low';
-    this.adaptiveRules = new Map();
   }
 
   async initialize(): Promise<void> {

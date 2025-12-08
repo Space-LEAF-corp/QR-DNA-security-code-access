@@ -100,7 +100,6 @@ describe('ImmutableLedger', () => {
     await ledger.append({ action: 'test2', data: {} });
 
     // Tamper with an entry
-    const entries = ledger.getEntries();
     const entriesInternal = (ledger as any).entries;
     entriesInternal[0].data = { tampered: true };
 

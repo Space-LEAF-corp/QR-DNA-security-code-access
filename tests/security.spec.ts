@@ -82,7 +82,6 @@ describe('Notifier', () => {
       timestamp: Date.now()
     };
 
-    const payload = JSON.stringify({ event: 'alert', data: alert });
     const signature = (notifier as any).generateSignature({ event: 'alert', data: alert });
 
     expect(signature).toMatch(/^sha256=[a-f0-9]{64}$/);

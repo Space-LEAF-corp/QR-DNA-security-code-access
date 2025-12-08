@@ -15,7 +15,7 @@ export class ChildrenTail extends Tail {
     // Implement child-specific security checks
   }
 
-  async validateChildAccess(userId: string, age?: number): Promise<boolean> {
+  async validateChildAccess(_userId: string, age?: number): Promise<boolean> {
     // Age verification and parental consent checks
     if (age !== undefined && age < 13) {
       return false; // Require parental consent
