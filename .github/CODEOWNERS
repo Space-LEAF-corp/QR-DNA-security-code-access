@@ -1,0 +1,12 @@
+# CODEOWNERS file for QR-DNA Security Code Access
+# These owners will be automatically requested for review when someone opens a pull request.
+
+# Default owners for everything in the repo
+* @Space-LEAF-corp/security-team
+
+# Security modules require additional review
+/src/security/ @Space-LEAF-corp/security-team @Space-LEAF-corp/crypto-experts
+/config/policies.json @Space-LEAF-corp/legal-team @Space-LEAF-corp/security-team
+
+# CI/CD workflows
+/.github/workflows/ @Space-LEAF-corp/devops-team

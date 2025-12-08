@@ -89,6 +89,11 @@ dist
 *.d.ts.map
 !jest.config.js
 !example.js
+# Compiled tests (handled by Jest)
+tests/**/*.js
+tests/**/*.d.ts
+tests/**/*.js.map
+tests/**/*.d.ts.map
 
 # Gatsby files
 .cache/

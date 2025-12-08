@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://space-leaf-corp.example.com/schemas/qr-dna-attestation.schema.json",
+  "title": "QR-DNA Attestation Schema",
+  "description": "Schema for validating QR-DNA attestation messages",
+  "type": "object",
+  "required": ["kid", "alg", "typ", "iat", "exp", "actor", "scope"],
+  "properties": {
+    "kid": {
+      "type": "string",
+      "description": "Key ID - identifier for the signing key",
+      "minLength": 1
+    },
+    "alg": {
+      "type": "string",
+      "const": "EdDSA",
+      "description": "Algorithm must be EdDSA for Ed25519 signatures"
+    },
+    "typ": {
+      "type": "string",
+      "const": "QR-DNA-Attestation",
+      "description": "Type identifier for QR-DNA attestations"
+    },
+    "iat": {
+      "type": "number",
+      "description": "Issued at timestamp (Unix epoch in seconds)",
+      "minimum": 0
+    },
+    "exp": {
+      "type": "number",
+      "description": "Expiration timestamp (Unix epoch in seconds)",
+      "minimum": 0
+    },
+    "actor": {
+      "type": "string",
+      "description": "Actor/subject identifier",
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string",
+      "description": "Permission scope",
+      "minLength": 1
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Optional nonce for replay protection"
+    },
+    "meta": {
+      "type": "object",
+      "description": "Optional metadata object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

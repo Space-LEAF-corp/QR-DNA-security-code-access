@@ -2,6 +2,9 @@
   "name": "@space-leaf/qr-dna-security",
   "version": "1.0.0",
   "description": "Fox QPPI - QR-DNA Security Layer with immutable ledger and cryptographic verification",
+  "name": "@space-leaf-corp/qr-dna-security",
+  "version": "1.0.0",
+  "description": "Fox QPPI - QR-DNA security code access system with immutable ledger",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,6 +24,12 @@
   },
   "keywords": [
     "qr",
+    "test:watch": "npm test -- --watch",
+    "lint": "eslint src tests --ext .ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "qr-code",
     "dna",
     "security",
     "ledger",
@@ -30,6 +39,47 @@
   "author": "Space LEAF Corp",
   "license": "Apache-2.0",
   "dependencies": {
+    "blockchain"
+  ],
+  "author": "Space LEAF Corp",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.55.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "tweetnacl": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  "name": "qr-dna-security-code-access",
+  "version": "1.0.0",
+  "description": "Production-grade QR-DNA attestation with schema validation and key rotation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src tests --ext .ts"
+  },
+  "keywords": [
+    "qr-dna",
+    "attestation",
+    "security",
+    "key-rotation",
+    "ed25519"
+  ],
+  "author": "Space-LEAF-corp",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "ajv": "^8.12.0",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
@@ -45,5 +95,30 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  "description": "QR-DNA security code access system with immutable ledger and cryptographic verification",
+  "type": "module",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.spec.js",
+    "pretest": "npm run build"
+  },
+  "keywords": [
+    "qr-dna",
+    "security",
+    "ledger",
+    "cryptography"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "typescript": "^5.3.3"
   }
 }

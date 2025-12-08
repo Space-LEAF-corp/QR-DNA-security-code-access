@@ -34,6 +34,65 @@
       "strictMode": true,
       "allowUnknownFields": false,
       "requireAllFields": true
+    "security": {
+      "minPasswordLength": 12,
+      "requireTwoFactor": true,
+      "sessionTimeout": 3600,
+      "maxLoginAttempts": 5,
+      "lockoutDuration": 900
+    },
+    "ledger": {
+      "allowModification": false,
+      "requireSignature": false,
+      "auditEnabled": true,
+      "compressionEnabled": true
+    },
+    "dataRetention": {
+      "logRetentionDays": 90,
+      "auditRetentionDays": 365,
+      "backupEnabled": true,
+      "backupFrequency": "daily"
+    },
+    "rateLimit": {
+      "enabled": true,
+      "maxRequestsPerMinute": 100,
+      "maxRequestsPerHour": 1000
+    },
+    "alerting": {
+      "enabled": true,
+      "severityLevels": ["low", "medium", "high", "critical"],
+      "notificationChannels": ["email", "webhook"]
+  "privacyTiers": {
+    "children": "private",
+    "parents": "protected",
+    "government": "public"
+  },
+  "accessControl": {
+    "LEIF_STEWARD": {
+      "permissions": ["BODY_MERGE", "READ", "WRITE", "ADMIN"],
+      "description": "Full administrative access for LEIF stewards"
+    },
+    "PARENT": {
+      "permissions": ["READ", "WRITE"],
+      "description": "Parent access to family information"
+    },
+    "CHILD": {
+      "permissions": ["READ"],
+      "description": "Child read-only access"
+    }
+  },
+  "notificationChannels": {
+    "family": {
+      "privacyLevel": "private",
+      "redactFields": ["sessionId", "childName", "childId"]
+    },
+    "authority": {
+      "privacyLevel": "protected",
+      "redactFields": []
+    },
+    "public": {
+      "privacyLevel": "public",
+      "redactFields": []
     }
   }
 }
