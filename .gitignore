@@ -88,6 +88,7 @@ dist
 *.js.map
 *.d.ts.map
 !jest.config.js
+!example.js
 
 # Gatsby files
 .cache/
