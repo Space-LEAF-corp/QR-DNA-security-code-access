@@ -1,0 +1,23 @@
+# Code Owners for Fox QPPI
+
+# Default owners for everything in the repo
+* @Space-LEAF-corp/fox-qppi-team
+
+# Security-related files require security team review
+/src/security/ @Space-LEAF-corp/security-team
+/src/alerts/ @Space-LEAF-corp/security-team
+*.key @Space-LEAF-corp/security-team
+*.pem @Space-LEAF-corp/security-team
+
+# Infrastructure requires DevOps review
+/terraform/ @Space-LEAF-corp/devops-team
+/.github/workflows/ @Space-LEAF-corp/devops-team
+Dockerfile* @Space-LEAF-corp/devops-team
+
+# Key management scripts require security approval
+/scripts/rotate-kms-key.ts @Space-LEAF-corp/security-team
+/scripts/revoke-key.ts @Space-LEAF-corp/security-team
+
+# Configuration files
+*.json @Space-LEAF-corp/fox-qppi-team
+.env.example @Space-LEAF-corp/security-team

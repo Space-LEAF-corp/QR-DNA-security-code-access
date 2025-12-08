@@ -137,3 +137,12 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Fox QPPI specific
+data/
+*.key
+*.pem
+.env.local
+.env.production
+dist/
+build/
