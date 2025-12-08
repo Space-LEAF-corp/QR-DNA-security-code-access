@@ -2,7 +2,7 @@
  * ImmutableLedger: Cryptographic ledger using SHA-256 with optional tweetnacl signing
  */
 
-import { createHash, createHmac } from 'crypto';
+import { createHash } from 'crypto';
 import nacl from 'tweetnacl';
 import type { LedgerEntry } from '../core/Types.js';
 
