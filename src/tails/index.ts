@@ -44,9 +44,11 @@ export class TailManager {
    * @returns The created entry
    */
   public append(type: string, data: unknown): TailEntry {
+    const timestamp = Date.now();
+    const entryIndex = this.entries.length;
     const entry: TailEntry = {
-      id: `tail_${Date.now()}_${this.entries.length}`,
-      timestamp: Date.now(),
+      id: `tail_${timestamp}_${entryIndex}`,
+      timestamp,
       type,
       data
     };

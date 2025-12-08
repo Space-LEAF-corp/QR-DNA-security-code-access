@@ -60,12 +60,13 @@ export class ImmutableLedger {
   public append(options: LedgerEntryOptions): LedgerEntry {
     const { data, signFn } = options;
     const timestamp = Date.now();
-    const previousHash = this.entries.length > 0
-      ? this.entries[this.entries.length - 1].hash
+    const entryIndex = this.entries.length;
+    const previousHash = entryIndex > 0
+      ? this.entries[entryIndex - 1].hash
       : this.genesisHash;
 
     // Generate unique ID
-    const id = `entry_${timestamp}_${this.entries.length}`;
+    const id = `entry_${timestamp}_${entryIndex}`;
 
     // Compute hash of entry data
     const entryData = JSON.stringify({

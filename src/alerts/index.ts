@@ -45,9 +45,11 @@ export class AlertManager {
     source: string,
     metadata?: Record<string, unknown>
   ): Alert {
+    const timestamp = Date.now();
+    const alertIndex = this.alerts.length;
     const alert: Alert = {
-      id: `alert_${Date.now()}_${this.alerts.length}`,
-      timestamp: Date.now(),
+      id: `alert_${timestamp}_${alertIndex}`,
+      timestamp,
       severity,
       message,
       source,
