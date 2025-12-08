@@ -5,10 +5,17 @@
 import nacl from 'tweetnacl';
 
 /**
- * Generate a new Ed25519 key pair
+ * Generate a new Ed25519 key pair for signing
  */
 export function generateKeyPair(): nacl.SignKeyPair {
   return nacl.sign.keyPair();
+}
+
+/**
+ * Generate a new key pair for encryption
+ */
+export function generateBoxKeyPair(): nacl.BoxKeyPair {
+  return nacl.box.keyPair();
 }
 
 /**

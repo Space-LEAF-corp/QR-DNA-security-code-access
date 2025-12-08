@@ -10,6 +10,7 @@ export type { LedgerEntry, LedgerConfig, ValidationResult } from './core/index.j
 // Security
 export {
   generateKeyPair,
+  generateBoxKeyPair,
   sign,
   verify,
   generateNonce,

@@ -4,6 +4,7 @@
 
 export {
   generateKeyPair,
+  generateBoxKeyPair,
   sign,
   verify,
   generateNonce,
