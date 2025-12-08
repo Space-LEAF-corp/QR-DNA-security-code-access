@@ -60,11 +60,12 @@ describe('ImmutableLedger', () => {
       metadata: {},
     });
 
-    const entries = ledger.getEntries() as any[];
-    
-    // Try to tamper (this should fail because entries are frozen)
-    // But we can verify that verification would fail if we could tamper
+    // Entries are frozen and verification confirms integrity
     expect(ledger.verify()).toBe(true);
+    
+    // Verify entries are actually frozen
+    const entries = ledger.getEntries();
+    expect(Object.isFrozen(entries)).toBe(true);
   });
 
   test('should retrieve entries by user', () => {
