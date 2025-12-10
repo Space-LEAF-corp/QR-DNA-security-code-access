@@ -62,16 +62,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     process.exit(1);
   }
 
-  // Check for --key-id flag
-  const keyIdIndex = process.argv.indexOf('--key-id');
-  const finalKeyId = keyIdIndex !== -1 ? process.argv[keyIdIndex + 1] : keyId;
-
-  if (!finalKeyId) {
-    console.error('❌ Error: Key ID required');
-    process.exit(1);
-  }
-
-  revokeKey(finalKeyId)
+  revokeKey(keyId)
     .then(() => process.exit(0))
     .catch((error) => {
       console.error('\n❌ Key revocation failed:', error);
