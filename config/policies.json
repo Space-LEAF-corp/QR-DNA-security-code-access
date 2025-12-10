@@ -24,7 +24,7 @@
       "alertThreshold": "medium"
     },
     "government": {
-      "enabled": false,
+      "enabled": true,
       "priority": 5,
       "alertThreshold": "high"
     },
