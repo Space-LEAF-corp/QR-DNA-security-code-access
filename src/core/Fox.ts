@@ -51,7 +51,7 @@ export class Fox {
     }
 
     // Record in immutable ledger
-    const ledgerHash = this.ledger.append({
+    this.ledger.append({
       action: 'event_processed',
       userId: eventData.userId as string || 'unknown',
       timestamp: Date.now(),
