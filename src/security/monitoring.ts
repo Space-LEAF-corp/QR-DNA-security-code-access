@@ -28,9 +28,13 @@ export class Monitoring {
     };
 
     if (config.enabled && config.webhookUrl) {
+      const secret = process.env.WEBHOOK_SECRET;
+      if (!secret) {
+        throw new Error('WEBHOOK_SECRET environment variable is required when monitoring is enabled');
+      }
       this.notifier = new Notifier({
         webhookUrl: config.webhookUrl,
-        secret: process.env.WEBHOOK_SECRET || 'dev-secret'
+        secret
       });
     }
   }
