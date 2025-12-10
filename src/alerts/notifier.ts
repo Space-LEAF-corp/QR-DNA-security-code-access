@@ -11,7 +11,13 @@ export class Notifier {
   constructor(config?: Partial<NotifierConfig>) {
     this.config = {
       webhookUrl: process.env.NOTIFIER_WEBHOOK_URL || 'https://example.com/webhook',
-      secretKey: process.env.NOTIFIER_SECRET_KEY || 'default-secret',
+      secretKey: process.env.NOTIFIER_SECRET_KEY || (() => {
+        if (process.env.NODE_ENV === 'production') {
+          throw new Error('NOTIFIER_SECRET_KEY must be set in production');
+        }
+        // Generate a secure random key for development/testing
+        return require('crypto').randomBytes(32).toString('hex');
+      })(),
       mockSignal: process.env.NOTIFIER_MOCK_SIGNAL === 'true',
     };
 
