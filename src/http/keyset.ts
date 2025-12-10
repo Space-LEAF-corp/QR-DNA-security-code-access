@@ -15,22 +15,49 @@ interface JWK {
   alg: string;
   crv: string;
   x: string;
+  y?: string; // For ECDSA keys
 }
 
 interface JWKSet {
   keys: JWK[];
 }
 
+function base64ToBase64Url(b64: string): string {
+  // Convert base64 to base64url (RFC 4648 §5)
+  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
 function keyInfoToJWK(keyInfo: KeyInfo): JWK {
-  // Convert Ed25519 public key to JWK format
-  return {
-    kty: 'OKP',
-    use: 'sig',
-    kid: keyInfo.keyId,
-    alg: 'EdDSA',
-    crv: 'Ed25519',
-    x: keyInfo.publicKey
-  };
+  if (keyInfo.algorithm === 'ed25519') {
+    // Convert base64 to base64url
+    const x = base64ToBase64Url(keyInfo.publicKey);
+    return {
+      kty: 'OKP',
+      use: 'sig',
+      kid: keyInfo.keyId,
+      alg: 'EdDSA',
+      crv: 'Ed25519',
+      x
+    };
+  } else if (keyInfo.algorithm === 'ecdsa-p256') {
+    // Expect keyInfo.publicKey to be a base64-encoded uncompressed point (0x04 || x || y)
+    const raw = Buffer.from(keyInfo.publicKey, 'base64');
+    if (raw.length !== 65 || raw[0] !== 0x04) {
+      throw new Error('Invalid ECDSA P-256 public key format');
+    }
+    const x = base64ToBase64Url(raw.slice(1, 33).toString('base64'));
+    const y = base64ToBase64Url(raw.slice(33, 65).toString('base64'));
+    return {
+      kty: 'EC',
+      use: 'sig',
+      kid: keyInfo.keyId,
+      alg: 'ES256',
+      crv: 'P-256',
+      x,
+      y
+    } as JWK;
+  }
+  throw new Error(`Unsupported algorithm: ${keyInfo.algorithm}`);
 }
 
 app.get('/.well-known/jwks.json', async (_req, res) => {
