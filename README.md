@@ -195,7 +195,6 @@ Fox QPPI
 
 ### Cryptographic Verification
 - Ed25519 signature verification via TweetNaCl
-- Timestamp validation with configurable expiry
 - Ephemeral keypair generation for testing
 
 ### Webhook Security
