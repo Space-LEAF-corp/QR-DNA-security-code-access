@@ -64,8 +64,8 @@ export class StressTestHarness {
       successfulRequests,
       failedRequests,
       averageResponseTime: this.calculateAverage(responseTimes),
-      minResponseTime: Math.min(...responseTimes),
-      maxResponseTime: Math.max(...responseTimes),
+      minResponseTime: responseTimes.length > 0 ? Math.min(...responseTimes) : 0,
+      maxResponseTime: responseTimes.length > 0 ? Math.max(...responseTimes) : 0,
       startTime,
       endTime: Date.now(),
     };
