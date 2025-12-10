@@ -34,7 +34,7 @@ export class Notifier {
           'X-Signature-256': signature,
           'User-Agent': 'Fox-QPPI-Notifier/1.0'
         },
-        body: JSON.stringify(webhookPayload)
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
