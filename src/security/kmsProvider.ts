@@ -70,7 +70,7 @@ export class KmsProvider {
       return {
         keyId: response.KeyMetadata.KeyId || this.keyId,
         publicKey: '', // KMS doesn't expose public key directly for symmetric keys
-        algorithm: 'ed25519',
+        algorithm: 'ecdsa-p256-sha256',
         createdAt: response.KeyMetadata.CreationDate?.getTime() || Date.now(),
         metadata: {
           arn: response.KeyMetadata.Arn,
