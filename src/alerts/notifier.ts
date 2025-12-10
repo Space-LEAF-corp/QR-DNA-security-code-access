@@ -15,8 +15,8 @@ export class Notifier {
         if (process.env.NODE_ENV === 'production') {
           throw new Error('NOTIFIER_SECRET_KEY must be set in production');
         }
-        // Generate a secure random key for development/testing
-        return require('crypto').randomBytes(32).toString('hex');
+        // Use a fixed key for development/testing to ensure consistent signatures
+        return 'dev-secret-key';
       })(),
       mockSignal: process.env.NOTIFIER_MOCK_SIGNAL === 'true',
     };
