@@ -2,7 +2,7 @@ name: Daily Stress Test
 
 on:
   schedule:
-    # Run daily at 2 AM UTC
+    # Run daily at 2 AM UTC (GitHub Actions schedules are interpreted in UTC by default)
     - cron: '0 2 * * *'
   workflow_dispatch: # Allow manual trigger
 
