@@ -14,10 +14,14 @@
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "lint": "eslint src tests --ext .ts",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "stress": "node --loader ts-node/esm src/tools/stress.ts",
-    "keyset": "node --loader ts-node/esm src/http/keyset.ts",
-    "rotate-key": "node --loader ts-node/esm scripts/rotate-kms-key.ts",
-    "revoke-key": "node --loader ts-node/esm scripts/revoke-key.ts"
+    "stress": "node dist/tools/stress.js",
+    "keyset": "node dist/http/keyset.js",
+    "rotate-key": "node dist/scripts/rotate-kms-key.js",
+    "revoke-key": "node dist/scripts/revoke-key.js",
+    "stress:dev": "node --import ts-node/esm src/tools/stress.ts",
+    "keyset:dev": "node --import ts-node/esm src/http/keyset.ts",
+    "rotate-key:dev": "node --import ts-node/esm scripts/rotate-kms-key.ts",
+    "revoke-key:dev": "node --import ts-node/esm scripts/revoke-key.ts"
   },
   "keywords": [
     "qr-dna",
