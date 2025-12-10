@@ -59,7 +59,7 @@ export async function verifyWithRegistry(token: QrDnaToken): Promise<Verificatio
     }
 
     // Check if key exists in registry and is not revoked
-    const keyInfo = await registryInstance!.getKey(token.publicKey);
+    const keyInfo = await registryInstance!.getKey(token.id);
     if (!keyInfo) {
       return {
         valid: false,
