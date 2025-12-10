@@ -100,14 +100,8 @@ export class Notifier {
         return false;
       }
 
-      return createHmac('sha256', this.config.secretKey)
-        .update(expectedBuffer)
-        .digest()
-        .equals(
-          createHmac('sha256', this.config.secretKey)
-            .update(actualBuffer)
-            .digest()
-        );
+      // Use crypto.timingSafeEqual for secure comparison
+      return require('crypto').timingSafeEqual(expectedBuffer, actualBuffer);
     } catch {
       return false;
     }
