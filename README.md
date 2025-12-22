@@ -149,7 +149,7 @@ This script:
 ### Key Revocation
 
 ```bash
-npm run revoke-key -- --key-id <KEY_ID>
+npm run revoke-key -- <KEY_ID>
 ```
 
 ## Notifier HMAC Behavior
