@@ -26,17 +26,7 @@ export class Monitoring {
       errors: [],
       startTime: Date.now()
     };
-
-    if (config.enabled && config.webhookUrl) {
-      const secret = process.env.WEBHOOK_SECRET;
-      if (!secret) {
-        throw new Error('WEBHOOK_SECRET environment variable is required when monitoring is enabled');
-      }
-      this.notifier = new Notifier({
-        webhookUrl: config.webhookUrl,
-        secret
-      });
-    }
+    // Notifier initialization moved to start()
   }
 
   async start(): Promise<void> {
@@ -44,6 +34,17 @@ export class Monitoring {
       return;
     }
 
+    if (this.config.webhookUrl) {
+      const secret = process.env.WEBHOOK_SECRET;
+      if (!secret) {
+        console.warn('WEBHOOK_SECRET environment variable is required when monitoring is enabled; monitoring will be disabled.');
+        return;
+      }
+      this.notifier = new Notifier({
+        webhookUrl: this.config.webhookUrl,
+        secret
+      });
+    }
     // Check metrics every minute
     this.alertInterval = setInterval(() => {
       this.checkAlertThresholds();
