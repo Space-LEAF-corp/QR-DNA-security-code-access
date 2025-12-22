@@ -18,7 +18,7 @@ export interface KeyPair {
 export interface KeyInfo {
   keyId: string;
   publicKey: string;
-  algorithm: 'ed25519' | 'ecdsa-p256-sha256';
+  algorithm: 'ed25519' | 'ECDSA_SHA_256';
   createdAt: number;
   expiresAt?: number;
   revoked?: boolean;
