@@ -18,10 +18,10 @@
     "keyset": "node dist/http/keyset.js",
     "rotate-key": "node dist/scripts/rotate-kms-key.js",
     "revoke-key": "node dist/scripts/revoke-key.js",
-    "stress:dev": "node --import ts-node/esm src/tools/stress.ts",
-    "keyset:dev": "node --import ts-node/esm src/http/keyset.ts",
-    "rotate-key:dev": "node --import ts-node/esm scripts/rotate-kms-key.ts",
-    "revoke-key:dev": "node --import ts-node/esm scripts/revoke-key.ts"
+    "stress:dev": "node --loader ts-node/esm src/tools/stress.ts",
+    "keyset:dev": "node --loader ts-node/esm src/http/keyset.ts",
+    "rotate-key:dev": "node --loader ts-node/esm scripts/rotate-kms-key.ts",
+    "revoke-key:dev": "node --loader ts-node/esm scripts/revoke-key.ts"
   },
   "keywords": [
     "qr-dna",
